@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'niveau'
     ];
 
     /**
@@ -50,4 +52,9 @@ class User extends Authenticatable
             set : fn ($value) => Hash::make($value),
         );
     }
+    public function formations(): BelongsToMany
+    {
+        return $this->belongsToMany(Formation::class, 'formation_user', 'user_id', 'formation_id');
+    }
+    
 }

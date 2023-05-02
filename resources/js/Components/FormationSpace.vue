@@ -1,71 +1,86 @@
 <template>
-    <div class="max-w-sm w-full lg:max-w-full lg:flex">
-        <div class="w-3/10 object-cover">
-            <img
-                :src="'/images/' + formation.Image"
-                alt=""
-                style="
-                    max-width: 200px;
-                    max-height: 150px;
-                    height: 100%;
-                    object-fit: cover;
-                    margin: 0;
-                    padding: 0;
-                "
-            />
+<!--   <div class="grid grid-cols-1 gap-6">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="relative pb-56/25">
+        <img class="w-80 h-40 overflow-hidden" :src="'/images/' + formation.Image" alt="">      </div>
+      <div class="px-4 py-3">
+        <Link :href="route('formation.show', formation.id)">
+        <h3 class="text-lg font-medium text-gray-900">{{ formation.Title }}</h3></Link>
+        <div class="flex justify-between items-center mt-4">
+           <span class="text-xs text-white bg-gray-300 rounded-md px-2 py-1">{{ formation.Tags }}</span>
+          <div v-if="isAdmin" class="flex">
+            <Link :href="route('formation.edit', { formation: formation.id })">
+              <button class="border border-gray-700 rounded-md py-1 px-2 text-sm text-gray-700 mr-2 hover:bg-gray-700 hover:text-white">
+                Edit
+              </button>
+            </Link>
+            <Link :href="route('formation.destroy', { formation: formation.id })" method="DELETE">
+              <button class="border border-gray-700 rounded-md py-1 px-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">
+                Delete
+              </button>
+            </Link>
+          </div>
         </div>
-        <div class="w-7/10 px-4">
-            <span class="font-bold">
-                <Link :href="route('formation.show', formation.id)">
-                    {{ formation.Title }}
-                </Link>
-            </span>
-            <br />
-            <span class="text-gray-600 dark:text-gray-300">
-                {{ formation.Description }}
-            </span>
+      </div>
+    </div>
+  </div> -->
 
-            <br />
-            <span class="text-xs text-white bg-gray-300 rounded-md p-1">
-                {{ formation.Tags }}
-            </span>
+  <div class="">
+    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+        <img class="lg:h-72 md:h-48 w-full object-cover object-center"
+             :src="'/images/' + formation.Image" alt="blog">
 
-            <div v-if="isAdmin" class="grid grid-cols-2 text-center mt-2 justify-end w-full">
-                <span>
-                    <Link
-                        :href="
-                            route('formation.edit', { formation: formation.id })
-                        "
-                    >
-                        <div
-                            class="border-gray-700 border-2 rounded-md mx-2 hover:bg-gray-700 hover:text-white"
-                        >
-                            Edit
-                        </div>
-                    </Link>
+        <div class="p-6 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in">
+            <h2 class="text-base font-medium text-indigo-300 mb-1">
+              {{ moment(formation.created_at).format('MMMM DD, YYYY') }}
+</h2>
+<Link :href="route('formation.show', formation.id)">
+
+            <h1 class="text-2xl font-semibold mb-3 h-16">{{ formation.Title }}</h1>
+</Link>
+            <p class="leading-relaxed mb-3  truncate">{{ formation.Description }}</p>
+            <div class="flex items-center flex-wrap ">
+              <Link :href="route('formation.show', formation.id)">
+                <a class="text-indigo-300 inline-flex items-center md:mb-2 lg:mb-0">Read More
+                    <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+              </Link>
+                <span
+                    class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                    <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>1.2K
                 </span>
-                <span>
-                    <Link
-                        :href="
-                            route('formation.destroy', {
-                                formation: formation.id,
-                            })
-                        "
-                        method="DELETE"
-                    >
-                        <div
-                            class="border-gray-700 border-2 rounded-md mx-2 hover:bg-gray-700 hover:text-white"
-                        >
-                            Delete
-                        </div>
-                    </Link>
+                <span class="text-gray-400 inline-flex items-center leading-none text-sm">
+                    <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
+                        </path>
+                    </svg>6
                 </span>
             </div>
         </div>
+        
     </div>
+</div>
+
+
+
 </template>
 
+  
+  
+
 <script setup>
+import moment from 'moment';
+
 import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";

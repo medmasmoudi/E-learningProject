@@ -6,14 +6,16 @@ use App\Models\Chapters;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 
-class ChapterController extends Controller
-{    
+class ChaptersController extends Controller
+{
     public function index(Formation $formation)
     {
+        $chapters = $formation->chapters()->get();
+
         return inertia(
             'Formation/Show',
             [
-                'chapters' => Chapters::all()
+                'chapters' => $chapters,
             ]
         );
     }
@@ -21,41 +23,28 @@ class ChapterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $formation_id)
+  public function create(){
+        return inertia(
+            'Chapters/Create'
+        );
+    }
+    public function store(Request $request)
     {
+
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'formation_id' =>'required|int'
         ]);
-
-        $data['formation_id'] = $formation_id;
-
         Chapters::create($data);
+        return redirect()->route('formation.id', ['id' => $data['formation_id']]);
 
+    }
+    public function destroy(int $id){
+
+        Chapters::find($id)->delete();
+        sleep(1);
         return redirect()->back();
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Chapters $chapter)
-    {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
-        $chapter->update($data);
-
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Chapters $chapter)
-    {
-        $chapter->delete();
-        return redirect()->back();
-    }
+    
 }

@@ -11,5 +11,10 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
+  theme: {
+    fontFamily: {
+      'Zeitung': ['Zeitung Pro Black', 'Helvetica', 'Arial', 'sans-serif'],
+    },
+  },
 }
 

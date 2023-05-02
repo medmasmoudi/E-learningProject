@@ -1,5 +1,5 @@
 <template>
-    <div class="grid md:grid-cols-1 gap-4 xl:grid-cols-2 lg:grid-cols-2">
+    <div class="grid md:grid-cols-2 gap-4 xl:grid-cols-5 lg:grid-cols-4">
         <Box v-for="formation in formations" :key="formation.id">
             <FormationSpace :formation="formation" />
 

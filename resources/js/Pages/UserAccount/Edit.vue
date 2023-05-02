@@ -42,21 +42,12 @@
             </div>
             <button class="mt-5 btn-primary w-full" type="submit">Edit</button>
             <div>
-                <Link
-                    :href="
-                        route('user-account.destroy', {
-                            user_account: user.id,
-                        })
-                    "
-                    method="DELETE"
-                >
-                    <button
-                        class="mt-5 btn-primary bg-red-700 w-full"
-                        type="submit"
-                    >
-                        Delete Account
-                    </button>
-                </Link>
+                <Link :href="route('user-account.destroy', { user_account: props.user.id })" method="DELETE">
+
+                <button >
+                        hello
+                </button>
+            </Link>
             </div>
         </div>
     </form>
@@ -79,4 +70,7 @@ const update = () => {
 
     form.put(route("user-account.edit", { user_account: props.user.id }));
 };
+
+console.log(props.user.id);
+
 </script>

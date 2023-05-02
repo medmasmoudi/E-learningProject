@@ -26,6 +26,18 @@
                 </div>
             </div>
             <div class="mt-4">
+  <label for="niveau" class="label">Niveau</label>
+  <select v-model="form.niveau" id="niveau" class="input">
+    <option value="Beginner">Beginner</option>
+    <option value="Intermediate">Intermediate</option>
+    <option value="Advanced">Advanced</option>
+  </select>
+  <div class="input-error" v-if="form.errors.niveau">
+    {{ form.errors.niveau }}
+  </div>
+</div>
+
+            <div class="mt-4">
                 <label for="password" class="label">Password</label>
                 <input
                     v-model="form.password"
@@ -69,6 +81,7 @@ const form = useForm({
 
     name: null,
     email: null,
+    niveau: null,
     password: null,
     password_confirmation: null,
 });

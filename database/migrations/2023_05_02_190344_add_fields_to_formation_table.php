@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('formations', function (Blueprint $table) {
-            $table->string('Title');
-            $table->text('Description');
-            $table->string('Image')->nullable();
-            $table->string('Tags');
+            $table->string('Certificat')->nullable();
+
         });
     }
 
@@ -24,12 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-/*         Schema::table('formations', function (Blueprint $table) {
-            
-        }); */
-        Schema::dropColumns('formations',[
-            'Title','Description','Image'
-        ]);
-
+        Schema::table('formation', function (Blueprint $table) {
+            //
+        });
     }
 };

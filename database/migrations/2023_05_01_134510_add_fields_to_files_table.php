@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('chapters', function (Blueprint $table) {
-            $table->string('ChapTitle');
-            $table->string('ChapDescription');
+        Schema::table('files', function (Blueprint $table) {
+            $table->foreignIdFor(
+                \App\Models\Chapters::class)
+->constrained('chapters')
+            ->onCascade('delete');
         });
     }
 
@@ -22,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('chapters', function (Blueprint $table) {
+        Schema::table('files', function (Blueprint $table) {
             //
         });
     }

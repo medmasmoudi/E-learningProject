@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('chapters', function (Blueprint $table) {
-            $table->foreignIdFor(
-                \App\Models\Formation::class,
-                'by_formation_id'
-            )->constrained('formations');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('niveau');
         });
     }
 
@@ -24,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('chapters', function (Blueprint $table) {
+        Schema::table('user', function (Blueprint $table) {
             //
         });
     }

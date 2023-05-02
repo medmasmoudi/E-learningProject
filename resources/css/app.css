@@ -4,11 +4,11 @@
 
 @layer components {
   .label {
-    @apply block mb-1 text-gray-500 dark:text-gray-300 font-medium
+    @apply block mb-1 text-gray-500  font-medium
   }
 
   .input {
-    @apply block w-full p-2 rounded-md shadow-sm border border-gray-300 dark:border-gray-600 text-gray-500
+    @apply block w-full p-2 rounded-md shadow-sm border border-gray-300  text-gray-500
   }
 
   .btn-primary {
@@ -17,4 +17,11 @@
   .input-error {
     @apply text-sm text-red-500 dark:text-red-400
   }
+  @font-face {
+    font-family: "Zeitung Pro Black";
+    src: url("/public/Zeitung.ttf") format("truetype");
+  }
+
+
+  
 }

@@ -46,8 +46,15 @@ class FormationController extends Controller
         'Description' => 'required|string',
         'Tags' => 'required|string|max:255',
         'Image' => 'nullable|image|max:2048',
+        'Certificat	' => 'nullable|image|max:2048',
+
     ]);
 
+    if ($request->hasFile('Certificat')) {
+        $certificat = $request->file('Certificat');
+        $certificatName = time().'.'.$certificat->getClientOriginalExtension();
+        $certificat->move(public_path('images'), $certificatName);
+        $data['Certificat'] = $certificatName;}
     if ($request->hasFile('Image')) {
         $image = $request->file('Image');
         $imageName = time().'.'.$image->getClientOriginalExtension();
@@ -61,15 +68,27 @@ class FormationController extends Controller
 
     }
 
+    public function download($id)
+    {
+        $formation = Formation::find($id);
+        $certificat = public_path('images/' . $formation->Certificat);
+        dd($certificat);
+        return Storage::download($certificat);
+    }
+    
+
     /**
      * Display the specified resource.
      */
     public function show(Formation $formation)
     {
+        $chapters = $formation->chapters()->get();
+
         return inertia(
             'Formation/Show',
             [
-                'formation' => $formation
+                'formation' => $formation,
+                'chapters' => $chapters
             ]
         );
     }
@@ -112,6 +131,6 @@ class FormationController extends Controller
     public function destroy(Formation $formation)
     {
         $formation->delete();
-        return redirect()->back();
+        return redirect()->route('formation.index');
     }
 }
