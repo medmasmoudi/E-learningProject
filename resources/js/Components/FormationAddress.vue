@@ -75,8 +75,6 @@
   </div>
   <input type="hidden" v-model="form.formation_id">
   <div class="mt-4">
-
-
                 <button
                 
                   type="submit"
@@ -85,17 +83,10 @@
                 >
                   Done
                 </button>
-
               </div>
 </form> 
-
-
-
-
                 </p>
               </div>
-
-
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -155,7 +146,7 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 
-const isOpen = ref(true)
+const isOpen = ref(false)
 
 function closeModal() {
   isOpen.value = false

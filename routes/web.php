@@ -28,6 +28,7 @@ Route::resource('formation', FormationController::class)
 ->only(['store', 'update', 'edit','destroy', 'create'])->middleware(['auth', 'role:admin']);
 
 Route::get('formation/download/{id}', [FormationController::class ,'download'])->name('formation.download');
+Route::get('formation/files/download/{chapters}', [ChaptersController::class ,'downloadFiles'])->name('chapters.downloadFiles');
 
 Route::resource('formation', FormationController::class)
 ->except(['store', 'update', 'edit','destroy', 'create']);
@@ -36,10 +37,9 @@ Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 
-Route::resource('chapters', ChaptersController::class);
+Route::resource('chapters', ChaptersController::class)->only('store','destroy');
 
-Route::resource('files', FilesController::class)->only('store','create');
-
+Route::post('files.store', [FilesController::class , 'store'])->name('files.store');
 
 Route::resource('user-account', UserAccountController::class)->only('create', 'store');
 Route::resource('user-account', UserAccountController::class)

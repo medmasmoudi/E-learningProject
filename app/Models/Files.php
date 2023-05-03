@@ -11,7 +11,7 @@ class Files extends Model
     use HasFactory;
 
     protected $fillable = [
-        'filename'
+        'filename','chapters_id'
     ];
     public function chapters() : BelongsTo
     {

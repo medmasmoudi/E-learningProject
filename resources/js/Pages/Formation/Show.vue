@@ -22,10 +22,7 @@
           
           <div class="pr-4 flex flex-col justify-between items-end" >
             <div v-if="isAdmin">
-
-              <Link :href="route('files.create',  { chapters: chapter.id })">
-              <button class="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700 mr-4">Add Files</button>
-            </Link>
+              <AddingFiles :chapters="chapter"/>
             <Link :href="route('chapters.destroy', { chapter: chapter.id })" method="DELETE">
               <button class="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700">Delete</button>
             </Link>
@@ -33,7 +30,9 @@
 
 
             <button @click="openModal(chapter)"
-              class="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700">Details</button>
+              class="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700">
+              Details
+            </button>
           </div>
 
           <TransitionRoot appear :show="isOpen" as="template">
@@ -56,6 +55,12 @@
                       <div class="mt-2">
                         <p class="text-sm text-gray-500">
                           {{ selectedChapter ? selectedChapter.description : '' }}
+                        </p>
+                        <p>
+                          <a :href="route('chapters.downloadFiles', {chapters : selectedChapter ? selectedChapter : ''})" target="_blank">
+
+                            Download Files
+                          </a>
                         </p>
                       </div>
 
@@ -80,11 +85,13 @@
 
     </ul>
 
+<a :href="route('formation.download', {id : props.formation.id})" target="_blank">
 
-<Link :href="route('formation.download', {id : props.formation.id})">
-  Done! Get Your Certificat
-</Link>
-    
+  <div class="btn-done w-52 mt-4">
+    Done! Get Your Certificat
+  </div>
+
+</a>
   </div>
   
 </template>
@@ -93,9 +100,10 @@
 <script setup>
 import {Link} from "@inertiajs/vue3";
 import FormationAddress from '@/Components/FormationAddress.vue';
+import AddingFiles from '@/Components/AddingFiles.vue';
+import FilesDetails from '@/Components/FilesDetails.vue';
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import { useForm } from "@inertiajs/vue3";
 import { ref } from 'vue'
 import {
   TransitionRoot,
@@ -131,14 +139,7 @@ const isAdmin = computed(() => {
 const props = defineProps({
   formation: Object,
   chapters: Array,
-
 });
-
-/* const $length = props.chapters.length;
-
-console.log(props.chapters[$length-1]); */
-
-
 
 </script>
 

@@ -2,37 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\Files;
+use App\Models\Chapters;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFiles;
-use App\Models\Chapters;
-use File;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
-    public function create(Chapters $chapters)
-    {  
 
-        return inertia(
-            'Files/Create',[
-                'chapters' => $chapters
-            ]
-        );
-    }
-    public function store(Request $request, Chapters $chapters)
-    {
-        dd($request);
+    public function store(Request $request)
+    
+    {   if ($request->hasFile('file')) {
+        $data['filename'] = Storage::putFile('files', $request->file('file'));
+        $data['chapters_id'] = $request->chapters_id;
+        Files::create($data);
 
-    if ($request->hasFile('files')) {
-
-        foreach($request->file('files') as $file){
-            $path = $file->store('files', 'public');
-            $chapters->files()->save(new Files([
-                'filename' => $path
-            ]));
-        }
-
-    }
-        return redirect()->back();
+        return redirect()->back();}
     }
 }

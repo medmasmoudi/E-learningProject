@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Formation;
 use Illuminate\Http\Request;
+use App\Models\Chapters;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class FormationController extends Controller
 {
@@ -31,13 +34,7 @@ class FormationController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-/*     public function store(Request $request)
-    {
-        Formation::create($request->all());
-        return redirect() -> route('formation.index'); */
+
 
         public function store(Request $request)
 {
@@ -49,17 +46,13 @@ class FormationController extends Controller
         'Certificat	' => 'nullable|image|max:2048',
 
     ]);
-
     if ($request->hasFile('Certificat')) {
-        $certificat = $request->file('Certificat');
-        $certificatName = time().'.'.$certificat->getClientOriginalExtension();
-        $certificat->move(public_path('images'), $certificatName);
-        $data['Certificat'] = $certificatName;}
+        $path = Storage::putFile('certificats', $request->file('Certificat'));
+
+        $data['Certificat'] = $path;}
     if ($request->hasFile('Image')) {
-        $image = $request->file('Image');
-        $imageName = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
-        $data['Image'] = $imageName;
+        $image = Storage::putFile('certificats', $request->file('Image'));
+        $data['Image'] = $image;
     }
 
     Formation::create($data);
@@ -69,11 +62,11 @@ class FormationController extends Controller
     }
 
     public function download($id)
-    {
+    {   
         $formation = Formation::find($id);
-        $certificat = public_path('images/' . $formation->Certificat);
-        dd($certificat);
-        return Storage::download($certificat);
+        $certificat = $formation->Certificat;
+        $filename = 'Certificat.jpg';
+         return Storage::download("$certificat" ,"$filename");
     }
     
 
@@ -81,14 +74,16 @@ class FormationController extends Controller
      * Display the specified resource.
      */
     public function show(Formation $formation)
-    {
+    {   
         $chapters = $formation->chapters()->get();
+
+ 
 
         return inertia(
             'Formation/Show',
             [
                 'formation' => $formation,
-                'chapters' => $chapters
+                'chapters' => $chapters,
             ]
         );
     }

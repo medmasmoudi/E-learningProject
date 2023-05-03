@@ -25,6 +25,7 @@
     </div>
   </div> -->
 
+  
   <div class="">
     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img class="lg:h-72 md:h-48 w-full object-cover object-center"

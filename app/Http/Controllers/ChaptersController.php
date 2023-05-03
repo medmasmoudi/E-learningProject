@@ -3,30 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chapters;
-use App\Models\Formation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ChaptersController extends Controller
 {
-    public function index(Formation $formation)
-    {
-        $chapters = $formation->chapters()->get();
-
-        return inertia(
-            'Formation/Show',
-            [
-                'chapters' => $chapters,
-            ]
-        );
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-  public function create(){
-        return inertia(
-            'Chapters/Create'
-        );
+    public function downloadFiles(Chapters $chapters)
+    {   
+         $files = $chapters->files()->get();
+         $file = $files[0];
+        $filename = $file->filename;
+        $fileNameToInstall = 'Notes.pdf';
+         return Storage::download("$filename","$fileNameToInstall");  
     }
     public function store(Request $request)
     {
