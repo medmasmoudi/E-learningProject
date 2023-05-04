@@ -1,33 +1,5 @@
 <template>
-<!--   <div class="grid grid-cols-1 gap-6">
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-      <div class="relative pb-56/25">
-        <img class="w-80 h-40 overflow-hidden" :src="'/images/' + formation.Image" alt="">      </div>
-      <div class="px-4 py-3">
-        <Link :href="route('formation.show', formation.id)">
-        <h3 class="text-lg font-medium text-gray-900">{{ formation.Title }}</h3></Link>
-        <div class="flex justify-between items-center mt-4">
-           <span class="text-xs text-white bg-gray-300 rounded-md px-2 py-1">{{ formation.Tags }}</span>
-          <div v-if="isAdmin" class="flex">
-            <Link :href="route('formation.edit', { formation: formation.id })">
-              <button class="border border-gray-700 rounded-md py-1 px-2 text-sm text-gray-700 mr-2 hover:bg-gray-700 hover:text-white">
-                Edit
-              </button>
-            </Link>
-            <Link :href="route('formation.destroy', { formation: formation.id })" method="DELETE">
-              <button class="border border-gray-700 rounded-md py-1 px-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">
-                Delete
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  
-  <div class="">
-    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-gray-50 shadow-lg">
         <img class="lg:h-72 md:h-48 w-full object-cover object-center"
              :src="'/images/' + formation.Image" alt="blog">
 
@@ -51,26 +23,18 @@
                 </a>
               </Link>
                 <span
-                    class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                    class="text-gray-400 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
                     <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none"
                          stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
-                    </svg>1.2K
-                </span>
-                <span class="text-gray-400 inline-flex items-center leading-none text-sm">
-                    <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none"
-                         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path
-                            d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
-                        </path>
-                    </svg>6
+                    </svg>{{ formation.views }}
                 </span>
             </div>
         </div>
         
     </div>
-</div>
+
 
 
 
@@ -98,4 +62,5 @@ const isAdmin = computed(() => {
 defineProps({
     formation: Object,
 });
+
 </script>

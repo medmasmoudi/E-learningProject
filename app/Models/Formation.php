@@ -16,7 +16,9 @@ class Formation extends Model
         'Description',
         'Tags',
         'Image',
-        'Certificat'
+        'Certificat',
+        'duration',
+        'nbrOfSpots',
     ];
 
 

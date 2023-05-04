@@ -11,6 +11,16 @@
         <div v-if="form.errors.Description" class="mt-2 text-red-500">{{ form.errors.Description }}</div>
       </div>
       <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="duration">Duration</label>
+        <input v-model="form.duration" id="tags" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" />
+        <div v-if="form.errors.duration" class="mt-2 text-red-500">{{ form.errors.duration }}</div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="nbrOfSpots">Number of Spots available</label>
+        <input v-model="form.nbrOfSpots" id="nbrOfSpots" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" />
+        <div v-if="form.errors.nbrOfSpots" class="mt-2 text-red-500">{{ form.errors.nbrOfSpots }}</div>
+      </div>
+      <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="tags">Tags</label>
         <input v-model="form.Tags" id="tags" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" />
         <div v-if="form.errors.Tags" class="mt-2 text-red-500">{{ form.errors.Tags }}</div>
@@ -41,6 +51,9 @@ const form = useForm({
     Tags: "",
     Image: null,
     Certificat : null,
+    nbrOfSpots : null,
+    duration : null,
+    
 });
 const create = () => form.post(route("formation.store"));
 const onFileChange = (event) => {

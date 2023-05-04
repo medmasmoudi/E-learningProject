@@ -1,10 +1,12 @@
 <template>
   <div>
-    <FormationAddress :formation="props.formation"  />
+    <FormationAddress :formation="props.formation" :joined="props.joined" :users="props.users" />
   </div>
 
+<div v-if="joined == true">
 
-  <div class="mx-auto w-full max-w-6xl bg-white mt-5">
+</div>
+  <div class="mx-auto w-full max-w-6xl bg-white shadow-lg rounded-lg mt-5 p-2">
     <ul>
       <li v-for="(chapter, index) in chapters" :key="chapter.id" class="border-b-2 border-gray-100">
         <div class="py-5 flex justify-between border-l-4 border-transparent bg-transparent">
@@ -16,7 +18,7 @@
 
               <p class="text-base text-gray-700 font-bold tracking-wide">Chapter {{ index + 1 }}: {{ chapter.title }}</p>
 
-              <p class="text-sm text-gray-500 font-medium">{{ chapter.description }}</p>
+              <p class="text-sm text-gray-500 font-medium italic">{{ chapter.description }}</p>
             </div>
           </div> 
           
@@ -84,14 +86,16 @@
       </li>
 
     </ul>
+    <div class="w-60 mb-4">
+  <a :href="route('formation.download', {id : props.formation.id})" target="_blank">
 
-<a :href="route('formation.download', {id : props.formation.id})" target="_blank">
-
-  <div class="btn-done w-52 mt-4">
-    Done! Get Your Certificat
-  </div>
+<div class="btn-done m-4">
+  Done! Get Your Certificat
+</div>
 
 </a>
+</div>
+
   </div>
   
 </template>
@@ -139,6 +143,8 @@ const isAdmin = computed(() => {
 const props = defineProps({
   formation: Object,
   chapters: Array,
+  joined : Boolean,
+  users : Array,
 });
 
 </script>

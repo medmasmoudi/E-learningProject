@@ -11,11 +11,21 @@ class FormationUserController extends Controller
 {
     
     public function addFormationToUser(Formation $formation)
-
-    {        
-
+    {   
+        if ($formation->nbrOfSpots != 0) {
         $user = Auth::user();
-        $user->formations()->attach($formation->id);
+        if (!$user->formations->contains($formation->id)) {
+            $formation->nbrOfSpots --;
+            $formation->save();
+            $user->formations()->attach($formation->id);
+        }}}
+    public function removeFormationFromUser(Formation $formation)
 
-    }
+        {   
+
+            $user = Auth::user();
+                $formation->nbrOfSpots ++;
+                $formation->save();
+                $user->formations()->detach($formation->id);
+            }
 }

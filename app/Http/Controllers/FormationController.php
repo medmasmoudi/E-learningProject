@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chapters;
 use App\Models\Formation;
 use Illuminate\Http\Request;
-use App\Models\Chapters;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
+use function PHPUnit\Framework\isEmpty;
 
 class FormationController extends Controller
 {
@@ -15,7 +17,7 @@ class FormationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
         return inertia(
             'Formation/Index',
             [
@@ -44,15 +46,18 @@ class FormationController extends Controller
         'Tags' => 'required|string|max:255',
         'Image' => 'nullable|image|max:2048',
         'Certificat	' => 'nullable|image|max:2048',
-
+        'duration' => 'required|string|max:255',
+        'nbrOfSpots' => 'required|Integer',
     ]);
     if ($request->hasFile('Certificat')) {
         $path = Storage::putFile('certificats', $request->file('Certificat'));
 
         $data['Certificat'] = $path;}
     if ($request->hasFile('Image')) {
-        $image = Storage::putFile('certificats', $request->file('Image'));
-        $data['Image'] = $image;
+        $image = $request->file('Image');
+        $imageName = time().'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+        $data['Image'] = $imageName;
     }
 
     Formation::create($data);
@@ -74,16 +79,23 @@ class FormationController extends Controller
      * Display the specified resource.
      */
     public function show(Formation $formation)
-    {   
+    {   $user = Auth::user();
+        if ($user->role == 'user'){
+            $formation->views ++;
+            $formation->save();
+        }
         $chapters = $formation->chapters()->get();
-
- 
-
+        $users = $formation->users()->get()->reject(function ($item) use ($user) {
+            return $item->id == $user->id;
+        });
+        $joined = $formation->users->contains(Auth::user());
         return inertia(
             'Formation/Show',
             [
                 'formation' => $formation,
                 'chapters' => $chapters,
+                'joined' => $joined,
+                'users' => $users,
             ]
         );
     }
@@ -124,7 +136,7 @@ class FormationController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Formation $formation)
-    {
+    {   
         $formation->delete();
         return redirect()->route('formation.index');
     }

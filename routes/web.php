@@ -49,6 +49,7 @@ Route::resource('user-account', UserAccountController::class)
   Route::put('/user-account/{id}/edit', [UserAccountController::class, 'update'])->name('user-account.update');
 
   Route::post('join/{formation}', [FormationUserController::class, 'addFormationToUser'])->name('join');
+  Route::post('unjoin/{formation}', [FormationUserController::class, 'removeFormationFromUser'])->name('unjoin');
 
   Route::get('/DashboardAdmin',[Dashboard::class, 'DashboardAdmin'])->name('Dashboard')->middleware(['auth', 'role:admin']);
   Route::get('/Dashboard',[Dashboard::class, 'DashboardUser'])->name('DashboardUser')->middleware('auth', 'role:user');
