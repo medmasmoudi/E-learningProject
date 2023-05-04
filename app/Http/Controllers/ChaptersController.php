@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chapters;
+use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ChaptersController extends Controller
 {
-    public function downloadFiles(Chapters $chapters)
+    public function downloadFiles(int $id)
     {   
-         $files = $chapters->files()->get();
-         $file = $files[0];
+         $file = Files::find($id);
+
         $filename = $file->filename;
+
         $fileNameToInstall = 'Notes.pdf';
          return Storage::download("$filename","$fileNameToInstall");  
     }
@@ -33,6 +35,16 @@ class ChaptersController extends Controller
         Chapters::find($id)->delete();
         sleep(1);
         return redirect()->back();
+    }
+    public function show(int $id){
+        $chapter = Chapters::find($id);
+        $files = $chapter->files()->get();
+        return inertia(
+            'Chapter/Show', [
+                'chapter' => $chapter,
+                'files' => $files,
+            ]
+        );
     }
     
 }

@@ -51,7 +51,6 @@ class FormationController extends Controller
     ]);
     if ($request->hasFile('Certificat')) {
         $path = Storage::putFile('certificats', $request->file('Certificat'));
-
         $data['Certificat'] = $path;}
     if ($request->hasFile('Image')) {
         $image = $request->file('Image');

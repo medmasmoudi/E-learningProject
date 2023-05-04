@@ -4,9 +4,9 @@
     <div class="col-span-10">
       <h1 class="text-3xl font-bold text-gray-800">{{ formation.Title }}</h1>
       <p class="mt-4 text-lg text-gray-600">{{ formation.Description }}</p>
-      <p class="mt-4 text-md italic text-gray-600">Duration : {{ formation.duration }}</p>
-      <p class="mt-4 text-md italic text-gray-600">Number of spots available : {{ formation.nbrOfSpots }}</p>
-      <button @click="UsersopenModal" class="mt-4 text-md italic text-gray-600">Other members</button>
+      <p class="mt-4 text-md italic text-gray-600 pl-2">Duration : {{ formation.duration }}</p>
+      <p class="mt-4 text-md italic text-gray-600 pl-2">Number of spots available : {{ formation.nbrOfSpots }}</p>
+      <button @click="UsersopenModal" class="mt-2 text-md italic text-gray-600 p-2 rounded-md hover:bg-gray-300">Members</button>
 
 
     </div>
@@ -23,15 +23,29 @@
               enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
               leave-to="opacity-0 scale-95">
               <DialogPanel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                class="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 ">
                   Other members of this course
                 </DialogTitle>
                 <div class="mt-2">
                   <ul>
                     <li v-for="user in users" :key="user.id">
-                      <p class="text-sm text-gray-500">
-                        {{ user.name }}</p>
+                      <div class="flex justify-between">
+  <div class="flex text-sm text-gray-500 m-1">
+    {{ user.name }}
+  </div>
+  <div class="">
+    <Link :href="route('removeUserFromFormation', {formation : formation.id, user : user.id})" method="POST">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg></Link>
+
+
+  </div>
+</div>
+
+
+                        
                     </li>
                   </ul>
 

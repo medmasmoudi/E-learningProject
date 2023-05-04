@@ -28,4 +28,8 @@ class FormationUserController extends Controller
                 $formation->save();
                 $user->formations()->detach($formation->id);
             }
+    public function removeUser(Formation $formation, User $user){
+        $user->formations()->detach($formation->id);
+
+    }
 }
