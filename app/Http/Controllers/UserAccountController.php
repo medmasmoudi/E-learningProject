@@ -59,6 +59,7 @@ class UserAccountController extends Controller
 
     {
         User::find($id)->delete();
+        
         sleep(1);
         return redirect()->route('formation.index');
     }
