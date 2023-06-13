@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chapters;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
-use function PHPUnit\Framework\isEmpty;
 
 class FormationController extends Controller
 {
@@ -35,9 +31,6 @@ class FormationController extends Controller
             'Formation/Create',
         );
     }
-
-
-
         public function store(Request $request)
 {
     $data = $request->validate([
@@ -117,17 +110,13 @@ class FormationController extends Controller
     public function update(Request $request, Formation $formation)
 {
     $data = $request->all();
-    
     if ($request->hasFile('Image')) {
         $image = $request->file('Image');
         $imageName = time().'.'.$image->getClientOriginalExtension();
         $image->move(public_path('images'), $imageName);
         $data['Image'] = $imageName;
     }
-
     $formation->update($data);
-
-    return redirect()->route('formation.index');
 }
 
 

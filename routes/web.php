@@ -23,38 +23,26 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/',[HomeController::class, 'index'])->name('LandingPage');
-
 Route::resource('formation', FormationController::class)
-->only(['store', 'update', 'edit','destroy', 'create'])->middleware(['auth', 'role:admin']);
-
+->only(['store', 'update','destroy', 'create'])->middleware(['auth', 'role:admin']);
 Route::get('formation/download/{id}', [FormationController::class ,'download'])->name('formation.download');
 Route::get('formation/files/download/{file}', [ChaptersController::class ,'downloadFiles'])->name('chapters.downloadFiles');
-
 Route::resource('formation', FormationController::class)
 ->except(['store', 'update', 'edit','destroy', 'create']);
-
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
-
 Route::resource('chapters', ChaptersController::class)->only('store','destroy', 'show');
-
 Route::post('files.store', [FilesController::class , 'store'])->name('files.store');
-
 Route::resource('user-account', UserAccountController::class)->only('create', 'store');
 Route::resource('user-account', UserAccountController::class)
   ->only(['edit','destroy'])
   ->middleware('auth');
-
-  Route::put('/user-account/{id}/edit', [UserAccountController::class, 'update'])->name('user-account.update');
-
-  Route::post('join/{formation}', [FormationUserController::class, 'addFormationToUser'])->name('join');
-  Route::post('unjoin/{formation}', [FormationUserController::class, 'removeFormationFromUser'])->name('unjoin');
-  Route::post('unjoin/{formation}/{user}', [FormationUserController::class, 'removeUser'])->name('removeUserFromFormation');
-
-
-  Route::get('/DashboardAdmin',[Dashboard::class, 'DashboardAdmin'])->name('Dashboard')->middleware(['auth', 'role:admin']);
-  Route::get('/Dashboard',[Dashboard::class, 'DashboardUser'])->name('DashboardUser')->middleware('auth', 'role:user');
-  Route::get('/users/{user}/formations', [Dashboard::class, 'FormationForEachUser'])->name('users.formations')->middleware(['auth', 'role:admin']);
-
+Route::put('/user-account/{id}/edit', [UserAccountController::class, 'update'])->name('user-account.update');
+Route::post('join/{formation}', [FormationUserController::class, 'addFormationToUser'])->name('join');
+Route::post('unjoin/{formation}', [FormationUserController::class, 'removeFormationFromUser'])->name('unjoin');
+Route::post('unjoin/{formation}/{user}', [FormationUserController::class, 'removeUser'])->name('removeUserFromFormation');
+Route::get('/DashboardAdmin',[Dashboard::class, 'DashboardAdmin'])->name('Dashboard')->middleware(['auth', 'role:admin']);
+Route::get('/Dashboard',[Dashboard::class, 'DashboardUser'])->name('DashboardUser')->middleware('auth', 'role:user');
+Route::get('/users/{user}/formations', [Dashboard::class, 'FormationForEachUser'])->name('users.formations')->middleware(['auth', 'role:admin']);
 Route::get('/formation/{id}',[ChaptersController::class,'store'])->name('formation.id');

@@ -6,9 +6,8 @@
       <p class="mt-4 text-lg text-gray-600">{{ formation.Description }}</p>
       <p class="mt-4 text-md italic text-gray-600 pl-2">Duration : {{ formation.duration }}</p>
       <p class="mt-4 text-md italic text-gray-600 pl-2">Number of spots available : {{ formation.nbrOfSpots }}</p>
-      <button @click="UsersopenModal" class="mt-2 text-md italic text-gray-600 p-2 rounded-md hover:bg-gray-300">Members</button>
-
-
+      <button @click="UsersopenModal"
+        class="mt-2 text-md italic text-gray-600 p-2 rounded-md hover:bg-gray-300">Members</button>
     </div>
     <TransitionRoot appear :show="UsersisOpen" as="template">
       <Dialog as="div" @close="UserscloseModal()" class="relative z-10">
@@ -16,7 +15,6 @@
           leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-black bg-opacity-25" />
         </TransitionChild>
-
         <div class="fixed inset-0 overflow-y-auto">
           <div class="flex min-h-full items-center justify-center p-4 text-center">
             <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
@@ -31,24 +29,20 @@
                   <ul>
                     <li v-for="user in users" :key="user.id">
                       <div class="flex justify-between">
-  <div class="flex text-sm text-gray-500 m-1">
-    {{ user.name }}
-  </div>
-  <div class="">
-    <Link :href="route('removeUserFromFormation', {formation : formation.id, user : user.id})" method="POST">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg></Link>
-
-
-  </div>
-</div>
-
-
-                        
+                        <div class="flex text-sm text-gray-500 m-1">
+                          {{ user.name }}
+                        </div>
+                        <div v-if="isAdmin">
+                          <Link :href="route('removeUserFromFormation', { formation: formation.id, user: user.id })"
+                            method="POST">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg></Link>
+                        </div>
+                      </div>
                     </li>
                   </ul>
-
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -65,7 +59,6 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span class="ml-1">Enroll</span>
-
         </Link>
       </div>
       <div v-if="joined == true">
@@ -76,12 +69,9 @@
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
         </svg>
-
         <span class="ml-1">Enrolled</span>
-
         </Link>
       </div>
-
     </div>
     <div class="col-span-2 flex items-center justify-center" v-if="!isAdmin && formation.nbrOfSpots == 0">
       <Link :href="route('join', formation.id)" method="POST"
@@ -91,24 +81,17 @@
         <path stroke-linecap="round" stroke-linejoin="round"
           d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-
       <span class="ml-1">Full</span>
-
-
       </Link>
     </div>
-
     <div class="col-span-2 flex items-center justify-center" v-if="isAdmin">
       <div>
-
-
         <button @click="openModal"
           class="inline-flex items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-indigo-200">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-
         </button>
         <TransitionRoot appear :show="isOpen" as="template">
           <Dialog as="div" @close="closeModal()" class="relative z-10">
@@ -116,7 +99,6 @@
               leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
               <div class="fixed inset-0 bg-black bg-opacity-25" />
             </TransitionChild>
-
             <div class="fixed inset-0 overflow-y-auto">
               <div class="flex min-h-full items-center justify-center p-4 text-center">
                 <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
@@ -163,16 +145,9 @@
             </div>
           </Dialog>
         </TransitionRoot>
-
-
       </div>
 
-
-
-
-
-      <Link :href="route('formation.edit', { formation: props.formation.id })">
-      <button
+      <button @click="EditopenModal"
         class="inline-flex items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-indigo-200">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
           <path
@@ -180,16 +155,82 @@
           </path>
         </svg>
       </button>
-      </Link>
-      <Link :href="route('formation.destroy', { formation: props.formation.id })" method="DELETE">
 
+      <TransitionRoot appear :show="EditisOpen" as="template">
+        <Dialog as="div" @close="EditcloseModal()" class="relative z-10">
+          <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
+            leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
+            <div class="fixed inset-0 bg-black bg-opacity-25" />
+          </TransitionChild>
+          <div class="fixed inset-0 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+              <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
+                enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
+                leave-to="opacity-0 scale-95">
+                <DialogPanel
+                  class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                    Edit Course Details
+                  </DialogTitle>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500">
+                    <form @submit.prevent="update">
+                      <div>
+                        <div>
+                          <label class="text-md font-medium leading-6 text-gray-900">Title: </label>
+                          <input v-model="formEdit.Title" type="text" class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 m-1"/>
+                        </div>
+                        <div v-if="formEdit.errors.Title">
+                          {{ formEdit.errors.Title }}
+                        </div>
+
+                        <div>
+                          <label class="text-md font-medium leading-6 text-gray-900">Description: </label>
+                          <input v-model="formEdit.Description" type="text" class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 m-1"/>
+                        </div>
+                        <div v-if="formEdit.errors.Description">
+                          {{ formEdit.errors.Description }}
+                        </div>
+                        <div>
+                          <label class="text-md font-medium leading-6 text-gray-900">Tags: </label>
+                          <input v-model="formEdit.Tags" type="text" class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 m-1"/>
+                        </div>
+                        <div v-if="formEdit.errors.Tags">
+                          {{ formEdit.errors.Tags }}
+                        </div>
+
+                        <div>
+                          <label class="text-md font-medium leading-6 text-gray-900">Image: </label>
+                          <input @change="onFileChange" type="file" class="m-1" />
+                        </div>
+                        <div v-if="formEdit.errors.Image">
+                          {{ formEdit.errors.Image }}
+                        </div>
+                      
+                    <div class="mt-4">
+                      <button type="submit"
+                        class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        @click="EditcloseModal">
+                        Done
+                      </button>
+                    </div>
+                    </div>
+                    </form>
+                    </p>
+                  </div>
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </Dialog>
+      </TransitionRoot>
+      <Link :href="route('formation.destroy', { formation: props.formation.id })" method="DELETE">
       <button
         class="inline-flex items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-red-200">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
           <path
             d="M 10 2 L 9 3 L 3 3 L 3 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 4.3652344 7 L 5.8925781 20.263672 C 6.0245781 21.253672 6.877 22 7.875 22 L 16.123047 22 C 17.121047 22 17.974422 21.254859 18.107422 20.255859 L 19.634766 7 L 4.3652344 7 z" />
         </svg>
-
       </button>
       </Link>
     </div>
@@ -221,6 +262,14 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
+const EditisOpen = ref(false)
+
+function EditcloseModal() {
+  EditisOpen.value = false
+}
+function EditopenModal() {
+  EditisOpen.value = true
+}
 
 const isOpen = ref(false)
 
@@ -255,7 +304,18 @@ const form = useForm({
 
 });
 
+const formEdit = useForm({
+  Title: props.formation.Title,
+  Description: props.formation.Description,
+  Tags: props.formation.Tags,
+  Image: props.formation.Image,
+})
+const update = () => formEdit.put(route('formation.update', { formation: props.formation.id }))
 
+const onFileChange = (event) => {
+  const file = event.target.files[0]
+  formEdit.Image = file
+}
 
 const upload = () => file.post(route('files.store'))
 const create = () => form.post(route('chapters.store'));
